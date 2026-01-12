@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 
 class PreloadedAd {
   final BannerAd ad;
@@ -23,6 +25,23 @@ class AdManager {
   
   // Test ID for debug (optional use)
   // final String _testAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
+
+  /// Initialize Consent Flow (UMP)
+  /// Returns a Future that completes when consent gathering is finished (or failed).
+  /// Initialize Consent Flow (iOS ATT)
+  /// Returns a Future that completes when consent gathering is finished (or failed).
+  Future<void> initializeConsent() async {
+    // iOSでのトラッキング許可ダイアログを直接呼び出し
+    try {
+      final status = await AppTrackingTransparency.trackingAuthorizationStatus;
+      if (status == TrackingStatus.notDetermined) {
+        // ダイアログ表示
+        await AppTrackingTransparency.requestTrackingAuthorization();
+      }
+    } catch (e) {
+      debugPrint("ATT Error: $e");
+    }
+  }
 
   void preloadAd(String key) {
     if (_ads.containsKey(key)) {

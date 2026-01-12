@@ -47,5 +47,7 @@
 	<true/>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-3331079517737737~9472090866</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>お客様の興味・関心に合わせた広告を表示するために使用されます。</string>
 </dict>
 </plist>
